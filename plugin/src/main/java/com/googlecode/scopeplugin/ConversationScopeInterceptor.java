@@ -121,7 +121,7 @@ public class ConversationScopeInterceptor extends AbstractInterceptor implements
 			// Get the conversation scope id from the HttpServletRequest.
 			String conversationId = request.getParameter (ConversationScopeAware.S2_CONVERSATION_ID);
 			// System.out.println ("conversationId = '" + conversationId + "'");
-			if (StringUtils.isBlank (conversationId) ) {
+			if (StringUtils.isEmpty (conversationId) ) {
 				// We need to generate a conversationId
 				conversationId = getConversationId (session);
 			}
