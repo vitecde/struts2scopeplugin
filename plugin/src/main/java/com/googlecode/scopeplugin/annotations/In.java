@@ -1,6 +1,12 @@
-package com.googlecode.scopeplugin;
+package com.googlecode.scopeplugin.annotations;
 
-public @interface Out {
+import com.googlecode.scopeplugin.ScopeType;
+
+public @interface In {
+    /**
+     * Specifies that a component should be instantiated if the context variable is null.
+     */
+    boolean create() default false;
     
     /**
      * Specifies that the injected value must not be null, by default.
@@ -10,7 +16,7 @@ public @interface Out {
     /**
      * Explicitly specify the scope to search, instead of searching all scopes.
      */
-    ScopeType scope() default ScopeType.ACTION_CONTEXT;
+    ScopeType scope() default ScopeType.UNSPECIFIED;
     
     /**
      * The context variable name. Defaults to the name of the annotated field or getter method.
