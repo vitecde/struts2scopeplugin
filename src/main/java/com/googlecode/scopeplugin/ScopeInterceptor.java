@@ -13,6 +13,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsException;
 
+import com.googlecode.scopeplugin.annotations.In;
+import com.googlecode.scopeplugin.annotations.Out;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
