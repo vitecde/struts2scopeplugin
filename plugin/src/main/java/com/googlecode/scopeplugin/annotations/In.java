@@ -4,11 +4,6 @@ import com.googlecode.scopeplugin.ScopeType;
 
 public @interface In {
     /**
-     * Specifies that a component should be instantiated if the context variable is null.
-     */
-    boolean create() default false;
-    
-    /**
      * Specifies that the injected value must not be null, by default.
      */
     boolean required() default true;
