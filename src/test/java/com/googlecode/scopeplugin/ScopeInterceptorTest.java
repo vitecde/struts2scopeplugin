@@ -11,6 +11,38 @@ import com.opensymphony.xwork2.mock.MockActionInvocation;
 import com.opensymphony.xwork2.mock.MockActionProxy;
 
 public class ScopeInterceptorTest extends TestCase {
+	public void testWrongType() throws Exception {
+		// test field annotation
+		ScopeInterceptor interceptor = new ScopeInterceptor();
+		MockActionInvocation invocation = new MockActionInvocation();
+		HashMap session = new HashMap();
+		session.put("testName", new Object());
+		ActionProxy proxy = new MockActionProxy();
+		proxy.setMethod("execute");
+		invocation.setProxy(proxy);
+		invocation.setInvocationContext(new ActionContext(new HashMap()));
+		invocation.getInvocationContext().setSession(session);
+		FakeFieldAction fieldAction = new FakeFieldAction();
+		invocation.setAction(fieldAction);
+		// make sure this doesn't error out
+		interceptor.intercept(invocation);
+
+		// test field annotation
+		interceptor = new ScopeInterceptor();
+		invocation = new MockActionInvocation();
+		session = new HashMap();
+		session.put("testName", new Object());
+		proxy = new MockActionProxy();
+		proxy.setMethod("execute");
+		invocation.setProxy(proxy);
+		invocation.setInvocationContext(new ActionContext(new HashMap()));
+		invocation.getInvocationContext().setSession(session);
+		FakeMethodAction methodAction = new FakeMethodAction();
+		invocation.setAction(methodAction);
+		// make sure this doesn't error out
+		interceptor.intercept(invocation);
+	}
+
 	public void testSessionScope() throws Exception {
 		// test field annotation
 		ScopeInterceptor interceptor = new ScopeInterceptor();
