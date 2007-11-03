@@ -7,7 +7,7 @@
 <struts>
     <package name="scope-default">
         <interceptors>
-            <interceptor name="bean-scope" class="org.apache.struts2.interceptor.scope.ScopeInterceptor"/>
+            <interceptor name="bean-scope" class="com.googlecode.scopeplugin.ScopeInterceptor"/>
         </interceptors>
     </package>
 </struts>
