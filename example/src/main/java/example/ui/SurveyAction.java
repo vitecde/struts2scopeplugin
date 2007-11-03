@@ -10,8 +10,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 /** */
 public class SurveyAction extends ActionSupport {
-	@In (required=false, scope=ScopeType.SESSION)
-	@Out (required=false, scope=ScopeType.SESSION)
+	@In (scope=ScopeType.CONVERSATION)
+	@Out (scope=ScopeType.CONVERSATION)
 	private SurveyBean surveyBean;
 	
 	@Begin
