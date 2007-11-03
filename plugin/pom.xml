@@ -19,6 +19,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<scm>
+		<connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</developerConnection>
+		<url>http://struts2scopeplugin.googlecode.com/svn/trunk/</url>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
