@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation"
+		value="false" />
+	<constant name="struts.devMode" value="true" />
+
+	<package name="example" namespace="/example"
+		extends="struts-default">
+		<interceptors>
+			<interceptor name="bean-scope"
+				class="com.googlecode.scopeplugin.ScopeInterceptor" />
+		</interceptors>
+
+		<action name="SurveyFirstPage" class="example.ui.SurveyAction"
+			method="firstPage">
+			<interceptor-ref name="bean-scope" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/example/surveyFirstPage.jsp</result>
+		</action>
+
+		<action name="SurveySecondPage" class="example.ui.SurveyAction"
+			method="secondPage">
+			<interceptor-ref name="bean-scope" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">
+				/example/surveySecondPage.jsp
+			</result>
+		</action>
+
+		<action name="SurveyThirdPage" class="example.ui.SurveyAction"
+			method="thirdPage">
+			<interceptor-ref name="bean-scope" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/example/surveyThirdPage.jsp</result>
+		</action>
+
+		<action name="SurveySummaryPage" class="example.ui.SurveyAction"
+			method="summaryPage">
+			<interceptor-ref name="bean-scope" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/example/surveySummaryPage.jsp</result>
+		</action>
+	</package>
+</struts>
