@@ -15,18 +15,34 @@ public class ScopeInterceptorTest extends TestCase {
 		HashMap session = new HashMap();
 		invocation.setInvocationContext(new ActionContext(new HashMap()));
 		invocation.getInvocationContext().setSession(session);
-		FakeAction action = new FakeAction();
-		action.setTestName("Tom");
-		invocation.setAction(action);
+		FakeFieldAction fieldAction = new FakeFieldAction();
+		fieldAction.setTestName("Tom");
+		invocation.setAction(fieldAction);
 		interceptor.intercept(invocation);
-		assertEquals("Tom", action.getTestName());
+		assertEquals("Tom", fieldAction.getTestName());
 		
 		session.clear();
-		action.setTestName(null);
+		fieldAction.setTestName(null);
 		session.put("testName", "Bob");
 		interceptor.intercept(invocation);
-		assertEquals("Bob", action.getTestName());
+		assertEquals("Bob", fieldAction.getTestName());
 		
 		// test method annotation
+		interceptor = new ScopeInterceptor();
+		invocation = new MockActionInvocation();
+		session = new HashMap();
+		invocation.setInvocationContext(new ActionContext(new HashMap()));
+		invocation.getInvocationContext().setSession(session);
+		FakeMethodAction methodAction = new FakeMethodAction();
+		methodAction.setTestName("Bill");
+		invocation.setAction(methodAction);
+		interceptor.intercept(invocation);
+		assertEquals("Bill", methodAction.getTestName());
+		
+		session.clear();
+		methodAction.setTestName(null);
+		session.put("testName", "George");
+		interceptor.intercept(invocation);
+		assertEquals("George", methodAction.getTestName());
 	}
 }

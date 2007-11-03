@@ -1,11 +1,9 @@
 package com.googlecode.scopeplugin.annotations;
 
-import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 
 import com.googlecode.scopeplugin.ScopeType;
 
@@ -14,14 +12,14 @@ import com.googlecode.scopeplugin.ScopeType;
 public @interface Out {
     
     /**
-     * Specifies that the injected value must not be null, by default.
+     * Specifies that the outjected value must not be null, false by default.
      */
-    boolean required() default true;
+    boolean required() default false;
     
     /**
-     * Explicitly specify the scope to search, instead of searching all scopes.
+     * Species the scope, defaults to CONVERSATION.
      */
-    ScopeType scope() default ScopeType.ACTION_CONTEXT;
+    ScopeType scope() default ScopeType.CONVERSATION;
     
     /**
      * The context variable name. Defaults to the name of the annotated field or getter method.

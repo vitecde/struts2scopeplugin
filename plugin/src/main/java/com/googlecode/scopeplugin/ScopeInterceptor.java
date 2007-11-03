@@ -8,11 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsException;
 
 import com.googlecode.scopeplugin.annotations.In;
@@ -21,7 +18,6 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.opensymphony.xwork2.util.AnnotationUtils;
-import com.sun.accessibility.internal.resources.accessibility;
 
 /**
  * <!-- START SNIPPET: description -->
@@ -127,7 +123,9 @@ public class ScopeInterceptor extends AbstractInterceptor {
 				throw new StrutsException("Scope object " + propName
 						+ " cannot be found in scope " + in.scope());
 			}
-			m.invoke(action, obj);
+			if (obj != null) {
+				m.invoke(action, obj);
+			}
 		}
 
 		if (flashScopeUsed) {
@@ -164,7 +162,9 @@ public class ScopeInterceptor extends AbstractInterceptor {
 
 			Object obj = m.invoke(action);
 
-			putObjectInScope(out.scope(), propName, ctx, obj);
+			if (obj != null) {
+				putObjectInScope(out.scope(), propName, ctx, obj);
+			}
 		}
 		return ret;
 	}
@@ -177,14 +177,6 @@ public class ScopeInterceptor extends AbstractInterceptor {
 	private Object findObjectInScope(ScopeType scopeType, String propName,
 			ActionContext ctx) {
 		Object obj = null;
-		if (obj == null
-				&& (scopeType == ScopeType.ACTION_CONTEXT || scopeType == ScopeType.UNSPECIFIED)) {
-			obj = ctx.get(propName);
-		}
-		if (obj == null
-				&& (scopeType == ScopeType.REQUEST || scopeType == ScopeType.UNSPECIFIED)) {
-			obj = ServletActionContext.getRequest().getAttribute(propName);
-		}
 		if (obj == null
 				&& (scopeType == ScopeType.FLASH || scopeType == ScopeType.UNSPECIFIED)) {
 			Map session = ctx.getSession();
@@ -209,12 +201,6 @@ public class ScopeInterceptor extends AbstractInterceptor {
 	private void putObjectInScope(ScopeType scopeType, String propName,
 			ActionContext ctx, Object obj) {
 		switch (scopeType) {
-		case ACTION_CONTEXT:
-			ctx.put(propName, obj);
-			break;
-		case REQUEST:
-			ServletActionContext.getRequest().setAttribute(propName, obj);
-			break;
 		case FLASH:
 			Map session = ctx.getSession();
 			Map<String, Object> flash = (Map<String, Object>) session
