@@ -10,8 +10,11 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsException;
 
+import com.googlecode.scopeplugin.annotations.Begin;
+import com.googlecode.scopeplugin.annotations.End;
 import com.googlecode.scopeplugin.annotations.In;
 import com.googlecode.scopeplugin.annotations.Out;
 import com.opensymphony.xwork2.ActionContext;
@@ -62,9 +65,6 @@ import com.opensymphony.xwork2.util.AnnotationUtils;
  * &lt;/action&gt;
  * &lt;!-- END SNIPPET: example --&gt;
  * </pre>
- * 
- * @version $Date: 2006-11-06 07:01:43 -0800 (Mon, 06 Nov 2006) $ $Id:
- *          CreateSessionInterceptor.java 471756 2006-11-06 15:01:43Z husted $
  */
 public class ScopeInterceptor extends AbstractInterceptor {
 
@@ -85,6 +85,18 @@ public class ScopeInterceptor extends AbstractInterceptor {
 		ActionContext ctx = invocation.getInvocationContext();
 		Class cls = action.getClass();
 		boolean flashScopeUsed = false;
+
+		String actionMethod = invocation.getProxy().getMethod();
+		Class clazz = invocation.getAction().getClass();
+		Method method = clazz.getDeclaredMethod(actionMethod, new Class[] {});
+		Begin begin = method.getAnnotation(Begin.class);
+		if (begin != null) {
+			if (!ctx.getSession()
+					.containsKey(ScopeType.CONVERSATION.toString())) {
+				ctx.getSession().put(ScopeType.CONVERSATION.toString(),
+						new HashMap<String, Object>());
+			}
+		}
 
 		List<Field> inFields = findAnnotatedFields(cls, false);
 		for (Field f : inFields) {
@@ -166,6 +178,12 @@ public class ScopeInterceptor extends AbstractInterceptor {
 				putObjectInScope(out.scope(), propName, ctx, obj);
 			}
 		}
+
+		End end = method.getAnnotation(End.class);
+		if (end != null) {
+			ctx.getSession().remove(ScopeType.CONVERSATION.toString());
+		}
+
 		return ret;
 	}
 
@@ -178,6 +196,10 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			ActionContext ctx) {
 		Object obj = null;
 		if (obj == null
+				&& (scopeType == ScopeType.REQUEST || scopeType == ScopeType.UNSPECIFIED)) {
+			obj = ServletActionContext.getRequest().getAttribute(propName);
+		}
+		if (obj == null
 				&& (scopeType == ScopeType.FLASH || scopeType == ScopeType.UNSPECIFIED)) {
 			Map session = ctx.getSession();
 			if (session != null) {
@@ -185,6 +207,15 @@ public class ScopeInterceptor extends AbstractInterceptor {
 				if (flash != null) {
 					obj = flash.get(propName);
 				}
+			}
+		}
+		if (obj == null
+				&& (scopeType == ScopeType.CONVERSATION || scopeType == ScopeType.UNSPECIFIED)) {
+			Map session = ctx.getSession();
+			Map conversation = (Map) session.get(ScopeType.CONVERSATION
+					.toString());
+			if (conversation != null) {
+				obj = conversation.get(propName);
 			}
 		}
 		if (obj == null
@@ -200,9 +231,12 @@ public class ScopeInterceptor extends AbstractInterceptor {
 
 	private void putObjectInScope(ScopeType scopeType, String propName,
 			ActionContext ctx, Object obj) {
+		Map session = ctx.getSession();
 		switch (scopeType) {
+		case REQUEST:
+			ServletActionContext.getRequest().setAttribute(propName, obj);
+			break;
 		case FLASH:
-			Map session = ctx.getSession();
 			Map<String, Object> flash = (Map<String, Object>) session
 					.get(ScopeType.FLASH.toString());
 			if (flash == null) {
@@ -210,6 +244,15 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			}
 			flash.put(propName, obj);
 			session.put(ScopeType.FLASH.toString(), flash);
+			break;
+		case CONVERSATION:
+			Map<String, Object> conversation = (Map<String, Object>) session
+					.get(ScopeType.CONVERSATION.toString());
+			if (conversation == null) {
+				conversation = new HashMap<String, Object>();
+			}
+			conversation.put(propName, obj);
+			session.put(ScopeType.CONVERSATION.toString(), conversation);
 			break;
 		case SESSION:
 			ctx.getSession().put(propName, obj);

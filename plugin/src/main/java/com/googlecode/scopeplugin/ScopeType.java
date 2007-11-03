@@ -5,5 +5,6 @@ public enum ScopeType {
     SESSION,
     CONVERSATION,
     FLASH,
+    REQUEST,
     UNSPECIFIED
 }
