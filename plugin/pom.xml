@@ -4,7 +4,7 @@
 	<artifactId>struts2-scope-plugin</artifactId>
 	<packaging>jar</packaging>
 	<name>Struts 2 Scope Plugin</name>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -17,9 +17,9 @@
 		</plugins>
 	</build>
 	<scm>
-		<connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/tags/struts2-scope-plugin-1.0.1</connection>
-		<developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/tags/struts2-scope-plugin-1.0.1</developerConnection>
-		<url>http://struts2scopeplugin.googlecode.com/svn/tags/struts2-scope-plugin-1.0.1</url>
+		<connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</developerConnection>
+		<url>http://struts2scopeplugin.googlecode.com/svn/trunk/</url>
 	</scm>
 	<dependencies>
 		<dependency>
