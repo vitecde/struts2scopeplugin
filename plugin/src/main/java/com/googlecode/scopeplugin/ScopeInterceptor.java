@@ -111,7 +111,8 @@ public class ScopeInterceptor extends AbstractInterceptor {
 				throw new StrutsException("Scope object " + propName
 						+ " cannot be found in scope " + in.scope());
 			}
-			if (obj != null) {
+			Class fieldType = f.getType();
+			if (obj != null && fieldType.isAssignableFrom(obj.getClass())) {
 				boolean accessible = f.isAccessible();
 				f.setAccessible(true);
 				f.set(action, obj);
@@ -135,7 +136,9 @@ public class ScopeInterceptor extends AbstractInterceptor {
 				throw new StrutsException("Scope object " + propName
 						+ " cannot be found in scope " + in.scope());
 			}
-			if (obj != null) {
+			Class paramTypes[] = m.getParameterTypes();
+			if (obj != null && paramTypes.length > 0
+					&& paramTypes[0].isAssignableFrom(obj.getClass())) {
 				m.invoke(action, obj);
 			}
 		}
