@@ -8,19 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.StrutsException;
-
 import com.googlecode.scopeplugin.annotations.Begin;
 import com.googlecode.scopeplugin.annotations.End;
 import com.googlecode.scopeplugin.annotations.In;
 import com.googlecode.scopeplugin.annotations.Out;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import com.opensymphony.xwork2.util.AnnotationUtils;
+import com.opensymphony.webwork.ServletActionContext;
+import com.opensymphony.xwork.ActionContext;
+import com.opensymphony.xwork.ActionInvocation;
 
 /**
  * <!-- START SNIPPET: description -->
@@ -70,7 +64,6 @@ public class ScopeInterceptor extends AbstractInterceptor {
 
 	private static final long serialVersionUID = -4590322556118858869L;
 
-	private static final Log LOG = LogFactory.getLog(ScopeInterceptor.class);
 	private static final Map<Class, CachedMethods> cachedMethods = Collections
 			.synchronizedMap(new HashMap<Class, CachedMethods>());
 
@@ -108,7 +101,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			Object obj = findObjectInScope(in.scope(), propName, ctx);
 
 			if (in.required() && obj == null) {
-				throw new StrutsException("Scope object " + propName
+				throw new RuntimeException("Scope object " + propName
 						+ " cannot be found in scope " + in.scope());
 			}
 			Class fieldType = f.getType();
@@ -133,7 +126,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			Object obj = findObjectInScope(in.scope(), propName, ctx);
 
 			if (in.required() && obj == null) {
-				throw new StrutsException("Scope object " + propName
+				throw new RuntimeException("Scope object " + propName
 						+ " cannot be found in scope " + in.scope());
 			}
 			Class paramTypes[] = m.getParameterTypes();
@@ -200,7 +193,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 		Object obj = null;
 		if (obj == null
 				&& (scopeType == ScopeType.REQUEST || scopeType == ScopeType.UNSPECIFIED)) {
-			obj = ServletActionContext.getRequest().getAttribute(propName);
+			obj = ActionContext.getContext().getParameters().get(propName);
 		}
 		if (obj == null
 				&& (scopeType == ScopeType.FLASH || scopeType == ScopeType.UNSPECIFIED)) {
@@ -237,7 +230,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 		Map session = ctx.getSession();
 		switch (scopeType) {
 		case REQUEST:
-			ServletActionContext.getRequest().setAttribute(propName, obj);
+			ActionContext.getContext().getParameters().put(propName, obj);
 			break;
 		case FLASH:
 			Map<String, Object> flash = (Map<String, Object>) session

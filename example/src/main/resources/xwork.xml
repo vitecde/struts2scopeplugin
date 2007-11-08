@@ -1,0 +1,25 @@
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.1.1//EN" "http://www.opensymphony.com/xwork/xwork-1.1.1.dtd">
+
+<xwork>
+	<package name="example" namespace="/example"
+		extends="webwork-default">
+		<interceptors>
+			<interceptor name="scope"
+				class="com.googlecode.scopeplugin.ScopeInterceptor">
+			</interceptor>
+		</interceptors>
+		<action name="SurveyEdit" class="example.ui.SurveyAction"
+			method="edit">
+			<interceptor-ref name="scope" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/example/survey.jsp</result>
+		</action>
+
+		<action name="SurveySave" class="example.ui.SurveyAction"
+			method="save">
+			<interceptor-ref name="scope" />
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/example/surveyResult.jsp</result>
+		</action>
+	</package>
+</xwork>
