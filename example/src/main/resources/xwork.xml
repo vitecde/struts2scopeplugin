@@ -1,6 +1,8 @@
 <!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.1.1//EN" "http://www.opensymphony.com/xwork/xwork-1.1.1.dtd">
 
 <xwork>
+	<include file="webwork-default.xml"/>
+	
 	<package name="example" namespace="/example"
 		extends="webwork-default">
 		<interceptors>
@@ -19,7 +21,7 @@
 			method="save">
 			<interceptor-ref name="scope" />
 			<interceptor-ref name="defaultStack" />
-			<result name="success">/example/surveyResult.jsp</result>
+			<result name="success">/example/surveySummary.jsp</result>
 		</action>
 	</package>
 </xwork>
