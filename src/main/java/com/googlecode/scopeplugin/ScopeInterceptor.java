@@ -12,7 +12,6 @@ import com.googlecode.scopeplugin.annotations.Begin;
 import com.googlecode.scopeplugin.annotations.End;
 import com.googlecode.scopeplugin.annotations.In;
 import com.googlecode.scopeplugin.annotations.Out;
-import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.ActionContext;
 import com.opensymphony.xwork.ActionInvocation;
 
