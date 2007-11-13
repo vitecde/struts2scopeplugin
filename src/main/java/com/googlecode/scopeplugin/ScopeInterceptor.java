@@ -80,13 +80,15 @@ public class ScopeInterceptor extends AbstractInterceptor {
 
 		String actionMethod = invocation.getProxy().getMethod();
 		Class clazz = invocation.getAction().getClass();
-		Method method = clazz.getDeclaredMethod(actionMethod, new Class[] {});
-		Begin begin = method.getAnnotation(Begin.class);
-		if (begin != null) {
-			if (!ctx.getSession()
-					.containsKey(ScopeType.CONVERSATION.toString())) {
-				ctx.getSession().put(ScopeType.CONVERSATION.toString(),
-						new HashMap<String, Object>());
+		Method method = findAnnotatedMethod(clazz, actionMethod);
+		if (method != null) {
+			Begin begin = method.getAnnotation(Begin.class);
+			if (begin != null) {
+				if (!ctx.getSession().containsKey(
+						ScopeType.CONVERSATION.toString())) {
+					ctx.getSession().put(ScopeType.CONVERSATION.toString(),
+							new HashMap<String, Object>());
+				}
 			}
 		}
 
@@ -174,14 +176,18 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			}
 		}
 
-		End end = method.getAnnotation(End.class);
-		if (end != null) {
-			ctx.getSession().remove(ScopeType.CONVERSATION.toString());
+		if (method != null) {
+			End end = method.getAnnotation(End.class);
+			if (end != null) {
+				ctx.getSession().remove(ScopeType.CONVERSATION.toString());
+			}
 		}
-
+		
 		return ret;
 	}
 
+	
+	
 	/**
 	 * @param in
 	 * @param propName
@@ -256,6 +262,17 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			ctx.getApplication().put(propName, obj);
 			break;
 		}
+	}
+
+	private Method findAnnotatedMethod(Class cls, String methodName) {
+		Method methods[] = cls.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++) {
+			if (methods[i].getName().equals(methodName)
+					&& methods[i].getParameterTypes().length == 0) {
+				return methods[i];
+			}
+		}
+		return null;
 	}
 
 	private List<Field> findAnnotatedFields(Class cls, boolean out) {
