@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>com.googlecode.struts2scopeplugin</groupId>
+  <artifactId>struts2-scope-plugin</artifactId>
+  <version>1.0.3-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20071125111623</lastUpdated>
+  </versioning>
+</metadata>
