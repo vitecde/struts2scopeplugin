@@ -35,11 +35,18 @@
 		<url>http://struts2scopeplugin.googlecode.com/svn/trunk/</url>
 	</scm>
 	<distributionManagement>
-		<repository>
+		<snapshotRepository>
 			<uniqueVersion>false</uniqueVersion>
-			<id>plugin-maven-repo</id>
+			<id>struts2scopeplugin-snapshot-maven-repo</id>
 			<url>
 				svn:https://struts2scopeplugin.googlecode.com/svn/trunk/maven-repo
+			</url>
+		</snapshotRepository>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>struts2plugin-maven-repo</id>
+			<url>
+				svn:https://struts2plugin-maven-repo.googlecode.com/svn/trunk/
 			</url>
 		</repository>
 	</distributionManagement>
