@@ -15,6 +15,13 @@ public @interface In {
      */
     boolean required() default false;
     
+    
+    /**
+     * Specifies that the injected value should be removed after action invocation, 
+     * false by default.
+     */
+    boolean remove() default false;    
+    
     /**
      * Explicitly specify the scope to search, instead of searching all scopes.
      */
