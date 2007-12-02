@@ -3,6 +3,12 @@ package com.googlecode.scopeplugin;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 import junit.framework.TestCase;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -86,6 +92,58 @@ public class ScopeInterceptorTest extends TestCase {
 		interceptor.intercept(invocation);
 		assertEquals("George", methodAction.getTestName());
 	}
+	
+	public void testCookieScope() throws Exception {
+		// Setup the request / response
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		ServletActionContext.setRequest(request);
+		ServletActionContext.setResponse(response);
+		
+		// Configure the request
+		final String inName = "cookieIn";
+		final String inValue = "cookie in value";
+		request.setCookies(new Cookie[]{new Cookie(inName, inValue)});
+		
+		// Configure the action
+		final String outName = "cookieOut";
+		final String outValue = "cookie out value";		
+		FakeCookieAction cookieAction = new FakeCookieAction();
+		cookieAction.setCookieOut(outValue);
+		
+		// Configure the action proxy
+		ActionProxy proxy = new MockActionProxy();
+		proxy.setMethod("execute");
+		
+		// Configure the invocation		
+		MockActionInvocation invocation = new MockActionInvocation();		
+		invocation.setProxy(proxy);
+		invocation.setInvocationContext(new ActionContext(new HashMap()));
+		invocation.setAction(cookieAction);
+		
+		// Call the action
+		ScopeInterceptor interceptor = new ScopeInterceptor();		
+		interceptor.intercept(invocation);
+		
+		// Verify @In
+		assertEquals(inValue, cookieAction.getCookieIn());
+		
+		// Verify @In(remove=true)
+		for (Cookie c : response.getCookies()) {
+			if (c.getName() == inName) {
+				assertEquals("", c.getValue());
+				break;
+			}
+		}
+		
+		// Verify @Out
+		for (Cookie c : response.getCookies()) {
+			if (c.getName() == outName) {
+				assertEquals(outValue, c.getValue());
+				break;
+			}
+		}		
+	}	
 
 	public void testBeginEnd() throws Exception {
 		// test field annotation
