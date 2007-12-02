@@ -3,11 +3,11 @@
   <groupId>com.googlecode.struts2scopeplugin</groupId>
   <artifactId>struts2-scope-plugin</artifactId>
   <name>Struts 2 Scope Plugin</name>
-  <version>1.0.4</version>
+  <version>1.0.5-SNAPSHOT</version>
   <scm>
-    <connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/tags/struts2-scope-plugin-1.0.4</connection>
-    <developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/tags/struts2-scope-plugin-1.0.4</developerConnection>
-    <url>http://struts2scopeplugin.googlecode.com/svn/tags/struts2-scope-plugin-1.0.4</url>
+    <connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</connection>
+    <developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</developerConnection>
+    <url>http://struts2scopeplugin.googlecode.com/svn/trunk/</url>
   </scm>
   <build>
     <plugins>
