@@ -156,9 +156,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 			Object obj = f.get(action);
 			f.setAccessible(accessible);
 
-			if (obj != null) {
-				putObjectInScope(out.scope(), propName, ctx, obj);
-			}
+			putObjectInScope(out.scope(), propName, ctx, obj);
 		}
 
 		List<Method> outMethods = findAnnotatedMethods(cls, true);
@@ -171,9 +169,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 
 			Object obj = m.invoke(action);
 
-			if (obj != null) {
-				putObjectInScope(out.scope(), propName, ctx, obj);
-			}
+			putObjectInScope(out.scope(), propName, ctx, obj);
 		}
 
 		if (method != null) {
