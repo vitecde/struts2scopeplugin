@@ -4,7 +4,7 @@
 	<artifactId>webwork-scope-plugin</artifactId>
 	<packaging>jar</packaging>
 	<name>Webwork Scope Plugin</name>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -17,9 +17,9 @@
 		</plugins>
 	</build>
 	<scm>
-		<connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/branches/scopeplugin-webwork</connection>
-		<developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/branches/scopeplugin-webwork</developerConnection>
-		<url>http://struts2scopeplugin.googlecode.com/svn/branches/scopeplugin-webwork</url>
+		<connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/tags/webwork-scope-plugin-1.0.3</connection>
+		<developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/tags/webwork-scope-plugin-1.0.3</developerConnection>
+		<url>http://struts2scopeplugin.googlecode.com/svn/tags/webwork-scope-plugin-1.0.3</url>
 	</scm>
 	<dependencies>
 		<dependency>
