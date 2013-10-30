@@ -3,6 +3,7 @@
   <groupId>com.googlecode.struts2scopeplugin</groupId>
   <artifactId>struts2-scope-plugin</artifactId>
   <name>Struts 2 Scope Plugin</name>
+  <description>Struts 2 Scope Plugin</description>
   <version>1.0.5-SNAPSHOT</version>
   <scm>
     <connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</connection>
