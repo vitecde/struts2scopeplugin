@@ -3,8 +3,10 @@ package com.googlecode.scopeplugin.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,21 +59,21 @@ public abstract class ScopeAnnotationUtils {
 			cache = new CachedMethods();
 			cachedMethods.put(cls, cache);
 		}
-		List<Method> methods = null;
+		Collection<Method> methods = null;
 		if (out) {
 			methods = cache.getOutMethods();
 			if (methods == null) {
-				methods = AnnotationUtils.findAnnotatedMethods(cls, Out.class);
+				methods = AnnotationUtils.getAnnotatedMethods(cls, Out.class);
 				cache.setOutMethods(methods);
 			}
 		} else {
 			methods = cache.getInMethods();
 			if (methods == null) {
-				methods = AnnotationUtils.findAnnotatedMethods(cls, In.class);
+				methods = AnnotationUtils.getAnnotatedMethods(cls, In.class);
 				cache.setInMethods(methods);
 			}
 		}
-		return methods;
+		return new LinkedList<Method>(methods);
 	}
 
 	private static class CachedMethods {
@@ -89,8 +91,8 @@ public abstract class ScopeAnnotationUtils {
 		 * @param inMethods
 		 *            the inMethods to set
 		 */
-		public void setInMethods(List<Method> inMethods) {
-			this.inMethods = inMethods;
+		public void setInMethods(Collection<Method> inMethods) {
+			this.inMethods = new LinkedList<Method>(inMethods);
 		}
 
 		/**
@@ -104,8 +106,8 @@ public abstract class ScopeAnnotationUtils {
 		 * @param outMethods
 		 *            the outMethods to set
 		 */
-		public void setOutMethods(List<Method> outMethods) {
-			this.outMethods = outMethods;
+		public void setOutMethods(Collection<Method> outMethods) {
+			this.outMethods = new LinkedList<Method>(outMethods);
 		}
 	}
 }
