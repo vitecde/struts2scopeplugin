@@ -62,14 +62,16 @@ public abstract class ScopeAnnotationUtils {
 		Collection<Method> methods = null;
 		if (out) {
 			methods = cache.getOutMethods();
-			if (methods == null) {
-				methods = AnnotationUtils.getAnnotatedMethods(cls, Out.class);
+			if (methods == null) {				
+				methods = new ArrayList<>(); 
+				AnnotationUtils.addAllMethods(Out.class, cls, (List<Method>)methods);
 				cache.setOutMethods(methods);
 			}
 		} else {
 			methods = cache.getInMethods();
 			if (methods == null) {
-				methods = AnnotationUtils.getAnnotatedMethods(cls, In.class);
+				methods = new ArrayList<>(); 
+				AnnotationUtils.addAllMethods(In.class, cls, (List<Method>)methods);
 				cache.setInMethods(methods);
 			}
 		}
