@@ -26,7 +26,7 @@ public abstract class ScopeAnnotationUtils {
 			.synchronizedMap(new HashMap<Class<?>, CachedMethods>());
 
 	public static Method findAnnotatedMethod(Class<?> cls, String methodName) {
-		Method methods[] = cls.getDeclaredMethods();
+		Method[] methods = cls.getDeclaredMethods();
 		for (int i = 0; i < methods.length; i++) {
 			if (methods[i].getName().equals(methodName)
 					&& methods[i].getParameterTypes().length == 0) {
@@ -37,20 +37,28 @@ public abstract class ScopeAnnotationUtils {
 	}
 
 	public static List<Field> findAnnotatedFields(Class<?> cls, boolean out) {
-		List<Field> annotatedFields = new ArrayList<Field>();
-		Field fields[] = cls.getDeclaredFields();
-		for (int i = 0; i < fields.length; i++) {
+		List<Field> annotatedFields = new ArrayList<>();
+		findFieldsRecursively(cls, out, annotatedFields);
+		return annotatedFields;
+	}
+
+	public static void findFieldsRecursively(Class<?> cls, boolean out, List<Field> annotatedFields) {
+		Field[] fields = cls.getDeclaredFields();
+
+		for(int i = 0; i < fields.length; ++i) {
 			if (out) {
 				if (fields[i].getAnnotation(Out.class) != null) {
 					annotatedFields.add(fields[i]);
 				}
-			} else {
-				if (fields[i].getAnnotation(In.class) != null) {
-					annotatedFields.add(fields[i]);
-				}
+			} else if (fields[i].getAnnotation(In.class) != null) {
+				annotatedFields.add(fields[i]);
 			}
 		}
-		return annotatedFields;
+
+		if (cls.getSuperclass() != Object.class) {
+			findFieldsRecursively(cls.getSuperclass(), out, annotatedFields);
+		}
+
 	}
 
 	public static List<Method> findAnnotatedMethods(Class<?> cls, boolean out) {
