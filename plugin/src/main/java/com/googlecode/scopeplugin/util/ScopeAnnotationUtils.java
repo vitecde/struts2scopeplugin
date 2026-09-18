@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.googlecode.scopeplugin.annotations.In;
 import com.googlecode.scopeplugin.annotations.Out;
-import com.opensymphony.xwork2.util.AnnotationUtils;
+import org.apache.struts2.util.AnnotationUtils;
 
 public abstract class ScopeAnnotationUtils {
 

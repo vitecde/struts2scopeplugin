@@ -4,7 +4,7 @@ import org.apache.struts2.StrutsException;
 
 import com.googlecode.scopeplugin.ScopeAdapter;
 import com.googlecode.scopeplugin.ScopeType;
-import com.opensymphony.xwork2.ActionContext;
+import org.apache.struts2.ActionContext;
 
 public abstract class AbstractScopeAdapter implements ScopeAdapter {
 	private final ActionContext context;

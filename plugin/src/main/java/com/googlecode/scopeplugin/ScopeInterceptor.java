@@ -17,9 +17,9 @@ import com.googlecode.scopeplugin.annotations.In;
 import com.googlecode.scopeplugin.annotations.Out;
 import com.googlecode.scopeplugin.util.PropertyUtils;
 import com.googlecode.scopeplugin.util.ScopeAnnotationUtils;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionInvocation;
+import org.apache.struts2.interceptor.AbstractInterceptor;
 
 public class ScopeInterceptor extends AbstractInterceptor {
 
@@ -30,7 +30,7 @@ public class ScopeInterceptor extends AbstractInterceptor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.opensymphony.xwork2.interceptor.Interceptor#intercept(com.opensymphony.xwork2.ActionInvocation)
+	 * @see org.apache.struts2.interceptor.Interceptor#intercept(org.apache.struts2.ActionInvocation)
 	 */
 	public String intercept(ActionInvocation invocation) throws Exception {
 		Object action = invocation.getAction();

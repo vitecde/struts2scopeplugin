@@ -3,8 +3,8 @@
   <groupId>com.googlecode.struts2scopeplugin</groupId>
   <artifactId>struts2-scope-plugin</artifactId>
   <name>Struts 2 Scope Plugin</name>
-  <description>Struts 2 Scope Plugin for Struts 2.3.x</description>
-  <version>2.0.1-patched-1</version>
+  <description>Struts 2 Scope Plugin for Struts 7.3.x</description>
+  <version>7.3.0-patched-1</version>
   <scm>
     <connection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</connection>
     <developerConnection>scm:svn:https://struts2scopeplugin.googlecode.com/svn/trunk/</developerConnection>
@@ -15,8 +15,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>17</source>
+          <target>17</target>
         </configuration>
       </plugin>
     </plugins>
@@ -37,15 +37,15 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.4</version>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-core</artifactId>
-      <version>2.5.33</version>
+      <version>7.3.0</version>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
@@ -65,16 +65,10 @@
     </dependency>
 	<dependency>
 	    <groupId>org.springframework</groupId>
-	    <artifactId>spring</artifactId>
-	    <version>2.0.2</version>
+	    <artifactId>spring-test</artifactId>
+	    <version>6.1.14</version>
 	    <scope>test</scope>
-	</dependency>      
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-mock</artifactId>
-	    <version>2.0.2</version>
-	    <scope>test</scope>
-	</dependency>    
+	</dependency>
   </dependencies>
 
   <distributionManagement>
